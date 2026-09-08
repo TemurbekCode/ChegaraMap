@@ -101,7 +101,18 @@ src/
 4. Taxminiy o'lcham (masalan, 30.0 × 20.0 m) ko'pburchakning geodezik bounding box'idan olinadi.
 5. `sotix = m² / 100`.
 
+## 🔐 Ro'yxatdan o'tish (Register)
+
+"Tekin boshlash" tugmasi (Navbar, Hero, CtaBand, Footer — hammasi) bosilganda, agar foydalanuvchi hali ro'yxatdan o'tmagan bo'lsa, ism va email so'raladi (parolsiz). Bir marta to'ldirilgach, o'sha brauzerda qayta so'ralmaydi.
+
+> ⚠️ **Muhim cheklov:** bu ma'lumot faqat **shu brauzer**ning `localStorage`'ida saqlanadi — backend yo'q. Ya'ni turli odamlarning haqiqiy ro'yxatdan o'tishlarini markazlashtirib sanab bo'lmaydi; har kim faqat o'z qurilmasida "ro'yxatdan o'tgan" bo'lib qoladi. Haqiqiy, barcha foydalanuvchilar bo'yicha statistika kerak bo'lsa, kichik backend (masalan, Supabase, Firebase yoki oddiy webhook) ulash kerak — `src/context/AppContext.jsx` ichidagi `submitRegister` funksiyasi aynan shu joy, u yerga API chaqiruvini qo'shish kifoya.
+>
+> Admin email (`temurbekalisherov82@gmail.com`) bilan ro'yxatdan o'tilganda, saqlangan foydalanuvchi obyektida `isAdmin: true` belgilanadi — kelajakda admin panel qo'shish uchun tayyor.
+
 ## 🗺️ Keyingi bosqichlar (roadmap)
+
+- [ ] Ro'yxatdan o'tishlarni markazlashtirish uchun backend (Supabase/Firebase) ulash
+- [ ] Admin uchun foydalanuvchilar sonini ko'rish paneli
 
 - [ ] `src/data/locations.js` dagi demo manzillarni haqiqiy geokodlash xizmati (masalan, Nominatim yoki Google Places) bilan almashtirish
 - [ ] Saqlangan o'lchovlarni qurilmalar orasida sinxronlash uchun backend + ma'lumotlar bazasi qo'shish

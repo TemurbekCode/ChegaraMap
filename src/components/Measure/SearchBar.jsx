@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContext.jsx";
 import { searchLocations } from "../../data/locations.js";
 
-export default function SearchBar({ mapInstance }) {
+export default function SearchBar({ mapInstance, onSelectLocation }) {
   const { t, showToast } = useApp();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -26,6 +26,7 @@ export default function SearchBar({ mapInstance }) {
 
   function selectLocation(loc) {
     if (mapInstance) mapInstance.flyTo([loc.lat, loc.lng], loc.zoom, { duration: 0.9 });
+    if (onSelectLocation) onSelectLocation(loc);
     setQuery(loc.name);
     setOpen(false);
   }

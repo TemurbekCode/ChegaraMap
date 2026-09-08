@@ -38,7 +38,7 @@ function ClickHandler({ onMapClick, disabled }) {
   return null;
 }
 
-export default function MapCanvas({ points, finished, mapStyle, onMapClick, onMapReady }) {
+export default function MapCanvas({ points, finished, mapStyle, locationBoundary, onMapClick, onMapReady }) {
   const latlngs = points.map((p) => [p.lat, p.lng]);
   const labels = edgeLabels(points, finished);
 
@@ -64,6 +64,23 @@ export default function MapCanvas({ points, finished, mapStyle, onMapClick, onMa
 
       <ZoomControl position="bottomright" />
       <ClickHandler onMapClick={onMapClick} disabled={finished} />
+
+      {/* the searched place's outline — a different color/dash from the
+          user's own measurement polygon below, so the two are never confused */}
+      {locationBoundary && (
+        <Polygon
+          key={locationBoundary.positions.map((p) => p.join(",")).join("|")}
+          positions={locationBoundary.positions}
+          pathOptions={{
+            color: locationBoundary.color,
+            weight: 2,
+            dashArray: "8 6",
+            fillOpacity: 0.04,
+            fillColor: locationBoundary.color
+          }}
+          interactive={false}
+        />
+      )}
 
       {points.map((p, i) => (
         <Marker key={`v-${i}`} position={[p.lat, p.lng]} icon={vertexIcon} keyboard={false} />

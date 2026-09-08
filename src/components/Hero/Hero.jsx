@@ -2,7 +2,7 @@ import { useApp } from "../../context/AppContext.jsx";
 import "./Hero.scss";
 
 export default function Hero() {
-  const { t, setView } = useApp();
+  const { t, setView, requestMeasure } = useApp();
 
   return (
     <div className="hero">
@@ -11,7 +11,7 @@ export default function Hero() {
         <h1>{t("home.h1")}</h1>
         <p className="hero-sub">{t("home.sub")}</p>
         <div className="hero-actions">
-          <button className="btn btn-primary" onClick={() => setView("measure")}>
+          <button className="btn btn-primary" onClick={() => requestMeasure(() => setView("measure"))}>
             {t("home.cta1")}
           </button>
           <button

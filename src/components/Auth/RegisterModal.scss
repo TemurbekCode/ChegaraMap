@@ -1,0 +1,112 @@
+@keyframes modalBackdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modalPopIn {
+  0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 36, 32, 0.45);
+  z-index: 220;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  animation: modalBackdropFade 0.2s ease both;
+}
+
+.register-card {
+  background: var(--panel);
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  padding: 24px 22px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-2);
+  position: relative;
+  animation: modalPopIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  h3 {
+    font-size: 19px;
+    margin-bottom: 8px;
+    padding-right: 24px;
+  }
+}
+.register-sub {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+.register-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 6px;
+}
+
+.field-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin: 14px 0 7px;
+}
+.register-card input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 46px;
+
+  &:focus-visible {
+    outline: 2px solid var(--moss);
+    outline-offset: 1px;
+  }
+}
+.field-error {
+  color: var(--clay);
+  font-size: 12.5px;
+  margin-top: 6px;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  margin-top: 22px;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 600px) {
+  .modal-backdrop {
+    align-items: center;
+    padding: 20px;
+  }
+  .register-card {
+    border-radius: var(--radius-m);
+    max-width: 400px;
+  }
+  .modal-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .btn {
+      width: auto;
+    }
+  }
+}

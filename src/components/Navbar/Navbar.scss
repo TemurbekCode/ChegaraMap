@@ -1,3 +1,13 @@
+@keyframes logoPop {
+  0% { opacity: 0; transform: scale(0.5) rotate(-8deg); }
+  60% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+@keyframes logoDotPop {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 .topbar {
   display: flex;
   align-items: center;
@@ -24,7 +34,23 @@
   width: 26px;
   height: 26px;
   flex-shrink: 0;
+  overflow: visible;
 }
+// logo animates in once, on first mount — a small "hello" moment,
+// not a repeating distraction
+.brand-mark-path {
+  transform-origin: center;
+  animation: logoPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.brand-mark-dot {
+  transform-origin: center;
+  animation: logoDotPop 0.4s ease both;
+}
+.brand-mark-dot.d1 { animation-delay: 0.3s; }
+.brand-mark-dot.d2 { animation-delay: 0.38s; }
+.brand-mark-dot.d3 { animation-delay: 0.46s; }
+.brand-mark-dot.d4 { animation-delay: 0.54s; }
+
 .brand-name {
   font-family: var(--font-display);
   font-weight: 600;
@@ -38,13 +64,14 @@
   gap: 8px;
 }
 
-// language pill: hidden in the topbar on phones (still reachable via
-// Settings and the footer), reappears in the topbar from tablet up
-.topbar .lang-pill {
+// language pill: hidden in the topbar on phones (still reachable inside the
+// mobile drawer, Settings, and the footer); reappears in the topbar from tablet up
+.topbar > .topbar-actions > .lang-pill {
   display: none;
 }
 
-// primary CTA hidden on phones — the hero button is the entry point there
+// primary CTA hidden on phones — the hero button is the entry point there,
+// and cramming it next to the burger icon looked cluttered
 .btn-cta {
   display: none;
 }
@@ -60,6 +87,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
+  transition: background 0.15s ease;
 
   &:hover {
     background: var(--line-soft);
@@ -69,24 +97,58 @@
   }
 }
 
+// ---------- mobile drawer (slides in from the right, not from the top) ----------
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 36, 32, 0.4);
+  z-index: 55;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
 .nav-links {
   position: fixed;
-  top: 60px;
-  left: 12px;
-  right: 12px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: min(300px, 84vw);
   background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-m);
+  border-left: 1px solid var(--line);
   box-shadow: var(--shadow-2);
   flex-direction: column;
   align-items: stretch;
-  padding: 8px;
-  display: none;
-  z-index: 50;
+  padding: 18px 14px;
+  display: flex;
   gap: 2px;
+  z-index: 60;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
 
   &.open {
-    display: flex;
+    transform: translateX(0);
+  }
+}
+
+.nav-drawer-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-soft);
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+
+  &:hover {
+    background: var(--line-soft);
   }
 }
 
@@ -113,7 +175,7 @@
 }
 
 @media (min-width: 720px) {
-  .topbar .lang-pill {
+  .topbar > .topbar-actions >  {
     display: flex;
   }
   .topbar {
@@ -125,11 +187,16 @@
   .nav-toggle {
     display: none;
   }
+  .nav-backdrop {
+    display: none;
+  }
   .btn-cta {
     display: inline-flex;
   }
   .nav-links {
     position: static;
+    height: auto;
+    width: auto;
     display: flex !important;
     flex-direction: row;
     align-items: center;
@@ -138,10 +205,11 @@
     box-shadow: none;
     padding: 0;
     gap: 2px;
-    width: auto;
-    left: auto;
-    right: auto;
-    top: auto;
+    transform: none;
+    transition: none;
+  }
+  .nav-drawer-close {
+    display: none;
   }
   .nav-btn {
     padding: 9px 14px;

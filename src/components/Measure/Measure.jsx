@@ -6,7 +6,11 @@ import MapControls from "./MapControls.jsx";
 import ResultPanel from "./ResultPanel.jsx";
 import { computeResult } from "../../utils/geometry.js";
 import { loadSavedMeasurements, persistSavedMeasurements } from "../../utils/storage.js";
+import { boundaryColorForLevel } from "../../data/locations.js";
 import "./Measure.scss";
+
+const HINT_VISIBLE_MS = 4200;
+const HINT_FADE_MS = 450;
 
 export default function Measure() {
   const { t, view, mapStyle, showToast, askConfirm } = useApp();
@@ -16,6 +20,15 @@ export default function Measure() {
   const [result, setResult] = useState(null);
   const [panelOpen, setPanelOpen] = useState(false);
   const [savedList, setSavedList] = useState(() => loadSavedMeasurements());
+
+  // the searched place's outline (district/city or mahalla), drawn in its own
+  // color so it never gets confused with the user's own measurement polygon
+  const [locationBoundary, setLocationBoundary] = useState(null);
+
+  // the "start measuring" bubble: bounces in like a notification, then
+  // fades itself out after a few seconds so it never blocks the map for long
+  const [hintVisible, setHintVisible] = useState(false);
+  const [hintLeaving, setHintLeaving] = useState(false);
 
   const mapInstanceRef = useRef(null);
   const [mapReady, setMapReady] = useState(false);
@@ -35,6 +48,23 @@ export default function Measure() {
     }
   }, [view]);
 
+  // empty-state hint: reappears (with its bounce-in) any time the canvas
+  // goes back to zero points, and quietly fades out on its own after a bit
+  useEffect(() => {
+    if (points.length === 0) {
+      setHintVisible(true);
+      setHintLeaving(false);
+      const t1 = setTimeout(() => setHintLeaving(true), HINT_VISIBLE_MS);
+      const t2 = setTimeout(() => setHintVisible(false), HINT_VISIBLE_MS + HINT_FADE_MS);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    }
+    setHintVisible(false);
+    setHintLeaving(false);
+  }, [points.length]);
+
   function handleMapClick(latlng) {
     if (finished) return;
     setPoints((prev) => [...prev, { lat: latlng.lat, lng: latlng.lng }]);
@@ -53,6 +83,7 @@ export default function Measure() {
     setFinished(false);
     setResult(null);
     setPanelOpen(false);
+    setLocationBoundary(null);
   }
 
   function handleClear() {
@@ -123,6 +154,7 @@ export default function Measure() {
     const loadedPoints = entry.points.map((p) => ({ lat: p.lat, lng: p.lng }));
     setPoints(loadedPoints);
     setFinished(true);
+    setLocationBoundary(null);
     const center = mapInstanceRef.current ? mapInstanceRef.current.getCenter() : loadedPoints[0];
     const r = computeResult(loadedPoints, center);
     setResult(r);
@@ -146,19 +178,40 @@ export default function Measure() {
     showToast(t("toast.deleted"));
   }
 
+  // called by SearchBar when a demo location with a known outline is chosen —
+  // draws that outline so the searched place is obvious and hard to confuse
+  // with a neighboring one
+  function handleSelectLocation(loc) {
+    if (loc.boundary) {
+      setLocationBoundary({
+        positions: loc.boundary,
+        color: boundaryColorForLevel(loc.level)
+      });
+    } else {
+      setLocationBoundary(null);
+    }
+  }
+
   return (
     <div className="measure-stage">
-      <MapCanvas points={points} finished={finished} mapStyle={mapStyle} onMapClick={handleMapClick} onMapReady={handleMapReady} />
+      <MapCanvas
+        points={points}
+        finished={finished}
+        mapStyle={mapStyle}
+        locationBoundary={locationBoundary}
+        onMapClick={handleMapClick}
+        onMapReady={handleMapReady}
+      />
 
-      <SearchBar mapInstance={mapReady ? mapInstanceRef.current : null} />
+      <SearchBar mapInstance={mapReady ? mapInstanceRef.current : null} onSelectLocation={handleSelectLocation} />
 
       <div className="badge-estimate">
         <span className="dot" aria-hidden="true"></span>
         <span>{t("measure.badge")}</span>
       </div>
 
-      {points.length === 0 && (
-        <div className="map-empty-hint">
+      {hintVisible && (
+        <div className={`map-empty-hint${hintLeaving ? " hint-leaving" : ""}`}>
           <strong>{t("measure.emptyTitle")}</strong>
           <span>{t("measure.emptyText")}</span>
         </div>

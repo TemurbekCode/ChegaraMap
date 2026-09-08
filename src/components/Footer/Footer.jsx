@@ -2,7 +2,7 @@ import { useApp } from "../../context/AppContext.jsx";
 import "./Footer.scss";
 
 export default function Footer() {
-  const { t, lang, setLang, setView } = useApp();
+  const { t, lang, setLang, setView, requestMeasure } = useApp();
   const year = new Date().getFullYear();
 
   function go(v) {
@@ -13,6 +13,9 @@ export default function Footer() {
     setTimeout(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 30);
+  }
+  function goMeasure() {
+    requestMeasure(() => setView("measure"));
   }
 
   return (
@@ -39,7 +42,7 @@ export default function Footer() {
           <button className="footer-link" onClick={() => goAnchor("how-it-works")}>
             {t("nav.how")}
           </button>
-          <button className="footer-link" onClick={() => go("measure")}>
+          <button className="footer-link" onClick={goMeasure}>
             {t("nav.measure")}
           </button>
           <button className="footer-link" onClick={() => go("settings")}>

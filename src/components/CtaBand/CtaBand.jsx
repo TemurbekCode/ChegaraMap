@@ -2,7 +2,7 @@ import { useApp } from "../../context/AppContext.jsx";
 import "./CtaBand.scss";
 
 export default function CtaBand() {
-  const { t, setView } = useApp();
+  const { t, setView, requestMeasure } = useApp();
 
   return (
     <div className="cta-band">
@@ -10,7 +10,7 @@ export default function CtaBand() {
         <h2>{t("home.ctaBand.title")}</h2>
         <p>{t("home.ctaBand.text")}</p>
       </div>
-      <button className="btn btn-primary" onClick={() => setView("measure")}>
+      <button className="btn btn-primary" onClick={() => requestMeasure(() => setView("measure"))}>
         {t("home.cta1")}
       </button>
     </div>
