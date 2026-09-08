@@ -1,0 +1,17 @@
+/* the Home view scrolls (it's the tallest of the three views) */
+.view-home {
+  overflow-y: auto;
+}
+
+.home-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 18px;
+}
+
+@media (min-width: 860px) {
+  .home-inner {
+    padding: 0 28px;
+  }
+}

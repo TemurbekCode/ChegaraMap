@@ -1,0 +1,38 @@
+.trust-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 20px;
+  margin: 40px 0 0;
+
+  h3 {
+    font-size: 14.5px;
+    margin-bottom: 6px;
+  }
+  p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+}
+.trust-icon {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--moss-dark);
+}
+
+@media (min-width: 860px) {
+  .trust-card {
+    padding: 22px 24px;
+    margin: 64px 0 0;
+
+    h3 {
+      font-size: 15px;
+    }
+  }
+}

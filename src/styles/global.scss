@@ -1,0 +1,195 @@
+:root {
+  --ink: #182420;
+  --ink-soft: #3a453f;
+  --paper: #f6f4ee;
+  --panel: #ffffff;
+  --line: #dedacb;
+  --line-soft: #eae7da;
+  --moss: #2f6f4e;
+  --moss-dark: #234f38;
+  --moss-tint: #e4eee7;
+  --clay: #a85a2a;
+  --clay-tint: #f4e7da;
+  --muted: #75705f;
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 22px;
+  --shadow-1: 0 1px 2px rgba(24, 36, 32, 0.06), 0 8px 24px -12px rgba(24, 36, 32, 0.18);
+  --shadow-2: 0 4px 10px rgba(24, 36, 32, 0.08), 0 20px 44px -18px rgba(24, 36, 32, 0.28);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+p {
+  margin: 0;
+}
+a {
+  color: inherit;
+}
+button {
+  font-family: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- shared buttons (used by Hero, CtaBand, Measure, Settings, ConfirmModal...) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 14px 24px;
+  min-height: 48px;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-primary {
+  background: var(--moss);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(24, 36, 32, 0.15);
+}
+.btn-primary:hover {
+  background: var(--moss-dark);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-secondary:hover {
+  background: var(--line-soft);
+}
+.btn-sm {
+  padding: 10px 16px;
+  min-height: 40px;
+  font-size: 13.5px;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- shared language pill (Navbar + Footer) ---------- */
+.lang-pill {
+  display: flex;
+  background: var(--line-soft);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.lang-pill button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  min-height: 34px;
+}
+.lang-pill button.active {
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- shared settings-style segmented control (Settings) ---------- */
+.seg {
+  display: flex;
+  background: var(--line-soft);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.seg button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  min-height: 38px;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.seg button.active {
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.section-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--moss-dark);
+  margin-bottom: 10px;
+}
+
+/* shared section heading (used by HowItWorks + Features) */
+.section-head {
+  max-width: 60ch;
+  margin-bottom: 28px;
+
+  h2 {
+    font-size: 24px;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+}
+@media (min-width: 860px) {
+  .section-head {
+    margin-bottom: 36px;
+    h2 {
+      font-size: 28px;
+    }
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+}

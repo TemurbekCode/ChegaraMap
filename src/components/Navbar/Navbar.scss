@@ -1,0 +1,150 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// language pill: hidden in the topbar on phones (still reachable via
+// Settings and the footer), reappears in the topbar from tablet up
+.topbar .lang-pill {
+  display: none;
+}
+
+// primary CTA hidden on phones — the hero button is the entry point there
+.btn-cta {
+  display: none;
+}
+
+.nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+
+  &:hover {
+    background: var(--line-soft);
+  }
+  svg {
+    display: block;
+  }
+}
+
+.nav-links {
+  position: fixed;
+  top: 60px;
+  left: 12px;
+  right: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px;
+  display: none;
+  z-index: 50;
+  gap: 2px;
+
+  &.open {
+    display: flex;
+  }
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 13px 14px;
+  border-radius: var(--radius-s);
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: var(--line-soft);
+  }
+  &.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
+
+@media (min-width: 720px) {
+  .topbar .lang-pill {
+    display: flex;
+  }
+  .topbar {
+    padding: 14px 28px;
+  }
+}
+
+@media (min-width: 980px) {
+  .nav-toggle {
+    display: none;
+  }
+  .btn-cta {
+    display: inline-flex;
+  }
+  .nav-links {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    gap: 2px;
+    width: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+  .nav-btn {
+    padding: 9px 14px;
+    font-size: 14px;
+  }
+}

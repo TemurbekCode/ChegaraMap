@@ -1,0 +1,44 @@
+.steps {
+  padding: 40px 0 0;
+  border-top: 1px solid var(--line);
+}
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+}
+.step-num {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--moss);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.step-icon {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.step-card {
+  h3 {
+    font-size: 16.5px;
+    margin-bottom: 7px;
+    font-weight: 600;
+  }
+  p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+}
+
+@media (min-width: 860px) {
+  .steps {
+    padding: 64px 0 0;
+  }
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+}
