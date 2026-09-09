@@ -62,7 +62,7 @@ export default function RegisterModal() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={isUz ? "Masalan: Aziz" : "e.g. Alex"}
+          placeholder={isUz ? "Ism" : "e.g. Alex"}
           autoComplete="name"
         />
         {errors.name && <div className="field-error">{errors.name}</div>}
@@ -75,7 +75,7 @@ export default function RegisterModal() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@example.com"
+          placeholder="you@gmail.com"
           autoComplete="email"
         />
         {errors.email && <div className="field-error">{errors.email}</div>}

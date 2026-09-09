@@ -69,7 +69,7 @@ export default function MapCanvas({ points, finished, mapStyle, locationBoundary
           user's own measurement polygon below, so the two are never confused */}
       {locationBoundary && (
         <Polygon
-          key={locationBoundary.positions.map((p) => p.join(",")).join("|")}
+          key={locationBoundary.id}
           positions={locationBoundary.positions}
           pathOptions={{
             color: locationBoundary.color,

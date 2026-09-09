@@ -6,7 +6,7 @@ import MapControls from "./MapControls.jsx";
 import ResultPanel from "./ResultPanel.jsx";
 import { computeResult } from "../../utils/geometry.js";
 import { loadSavedMeasurements, persistSavedMeasurements } from "../../utils/storage.js";
-import { boundaryColorForLevel } from "../../data/locations.js";
+import { boundaryColorForLevel } from "../../utils/geocode.js";
 import "./Measure.scss";
 
 const HINT_VISIBLE_MS = 4200;
@@ -139,7 +139,7 @@ export default function Measure() {
     ].join("\n");
 
     if (navigator.share) {
-      navigator.share({ title: "Chegara", text }).catch(() => {});
+      navigator.share({ title: "Chegara", text }).catch(() => { });
     } else if (navigator.clipboard) {
       navigator.clipboard
         .writeText(text)
@@ -184,6 +184,7 @@ export default function Measure() {
   function handleSelectLocation(loc) {
     if (loc.boundary) {
       setLocationBoundary({
+        id: loc.id || `${loc.lat},${loc.lng}`,
         positions: loc.boundary,
         color: boundaryColorForLevel(loc.level)
       });
@@ -194,41 +195,43 @@ export default function Measure() {
 
   return (
     <div className="measure-stage">
-      <MapCanvas
-        points={points}
-        finished={finished}
-        mapStyle={mapStyle}
-        locationBoundary={locationBoundary}
-        onMapClick={handleMapClick}
-        onMapReady={handleMapReady}
-      />
+      <div className="map-frame">
+        <MapCanvas
+          points={points}
+          finished={finished}
+          mapStyle={mapStyle}
+          locationBoundary={locationBoundary}
+          onMapClick={handleMapClick}
+          onMapReady={handleMapReady}
+        />
 
-      <SearchBar mapInstance={mapReady ? mapInstanceRef.current : null} onSelectLocation={handleSelectLocation} />
+        <SearchBar mapInstance={mapReady ? mapInstanceRef.current : null} onSelectLocation={handleSelectLocation} />
 
-      <div className="badge-estimate">
-        <span className="dot" aria-hidden="true"></span>
-        <span>{t("measure.badge")}</span>
-      </div>
-
-      {hintVisible && (
-        <div className={`map-empty-hint${hintLeaving ? " hint-leaving" : ""}`}>
-          <strong>{t("measure.emptyTitle")}</strong>
-          <span>{t("measure.emptyText")}</span>
+        <div className="badge-estimate">
+          <span className="dot" aria-hidden="true"></span>
+          <span>{t("measure.badge")}</span>
         </div>
-      )}
 
-      <MapControls pointCount={points.length} finished={finished} onUndo={handleUndo} onClear={handleClear} onFinish={handleFinish} />
+        {hintVisible && (
+          <div className={`map-empty-hint${hintLeaving ? " hint-leaving" : ""}`}>
+            <strong>{t("measure.emptyTitle")}</strong>
+            <span>{t("measure.emptyText")}</span>
+          </div>
+        )}
 
-      <ResultPanel
-        open={panelOpen}
-        result={result}
-        savedList={savedList}
-        onClose={() => setPanelOpen(false)}
-        onSave={handleSave}
-        onShare={handleShare}
-        onLoadSaved={handleLoadSaved}
-        onDeleteSaved={handleDeleteSaved}
-      />
+        <MapControls pointCount={points.length} finished={finished} onUndo={handleUndo} onClear={handleClear} onFinish={handleFinish} />
+
+        <ResultPanel
+          open={panelOpen}
+          result={result}
+          savedList={savedList}
+          onClose={() => setPanelOpen(false)}
+          onSave={handleSave}
+          onShare={handleShare}
+          onLoadSaved={handleLoadSaved}
+          onDeleteSaved={handleDeleteSaved}
+        />
+      </div>
     </div>
   );
 }

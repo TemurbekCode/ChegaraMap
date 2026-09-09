@@ -43,6 +43,7 @@ export const translations = {
       "Barcha o‘lchovlar xarita/GPS ma'lumotlariga asoslangan taxminiy natijalardir va rasmiy kadastr hujjati hisoblanmaydi.",
 
     "measure.searchPh": "Shahar, tuman yoki mahallani qidiring...",
+    "measure.searchingOnline": "Onlayn qidirilmoqda...",
     "measure.badge": "Xarita asosidagi taxmin",
     "measure.emptyTitle": "O‘lchashni boshlang",
     "measure.emptyText": "Xaritada yerning burchaklarini belgilang. Maydonni hisoblash uchun kamida 3 ta nuqta kerak.",
@@ -154,6 +155,7 @@ export const translations = {
     "footer.disclaimer": "All measurements are map/GPS-based estimates and do not constitute an official cadastral document.",
 
     "measure.searchPh": "Search city, district or neighborhood...",
+    "measure.searchingOnline": "Searching online...",
     "measure.badge": "Map-based estimate",
     "measure.emptyTitle": "Start measuring",
     "measure.emptyText": "Mark the corners of the land on the map. At least 3 points are required to calculate the area.",

@@ -1,113 +1,26 @@
-// Demo location dataset. Swap searchLocations() for a real geocoder
-// (e.g. Nominatim, Google Places) later without touching any component.
-//
-// NOTE ON "boundary": these polygons are illustrative placeholders drawn by
-// hand for the demo — they are NOT surveyed administrative boundaries. For
-// production, replace them with real boundary geometry (e.g. an OSM/Nominatim
-// polygon lookup, or Uzbekistan's official SOATO/GADM administrative data).
+// OFFLINE FALLBACK ONLY. The real search now goes through
+// src/utils/geocode.js (live OpenStreetMap/Nominatim data — covers any
+// mapped village, mahalla, town or city across Central Asia). This tiny
+// list is just what SearchBar shows instantly before the network reply
+// comes back, and what it falls back to if the device has no internet.
 export const DEMO_LOCATIONS = [
-  {
-    name: "Toshkent",
-    region: "Uzbekistan",
-    lat: 41.2995,
-    lng: 69.2401,
-    zoom: 12,
-    level: "city",
-    keywords: ["tashkent"]
-  },
-  {
-    name: "Samarqand",
-    region: "Samarqand region, Uzbekistan",
-    lat: 39.627,
-    lng: 66.975,
-    zoom: 13,
-    level: "city",
-    boundary: [
-      [39.655, 66.93],
-      [39.655, 67.02],
-      [39.6, 67.02],
-      [39.6, 66.93]
-    ]
-  },
-  {
-    name: "Urgut",
-    region: "Samarqand viloyati, Urgut tumani",
-    lat: 39.4,
-    lng: 67.2333,
-    zoom: 14,
-    level: "district",
-    keywords: ["urgut tumani", "urgut shahri"],
-    // Rough town-level outline — placeholder, not a surveyed district border.
-    boundary: [
-      [39.418, 67.205],
-      [39.418, 67.262],
-      [39.382, 67.262],
-      [39.382, 67.205]
-    ]
-  },
-  {
-    name: "Kengash",
-    region: "Urgut tumani, Samarqand viloyati (mahalla)",
-    lat: 39.409,
-    lng: 67.246,
-    zoom: 15,
-    level: "mahalla",
-    keywords: ["kengash mfy", "urgut kengash", "kengash mahallasi"],
-    // Small illustrative neighborhood outline within Urgut — placeholder only.
-    boundary: [
-      [39.4125, 67.241],
-      [39.4125, 67.251],
-      [39.4055, 67.251],
-      [39.4055, 67.241]
-    ]
-  },
-  {
-    name: "Buxoro",
-    region: "Bukhara region, Uzbekistan",
-    lat: 39.7747,
-    lng: 64.4286,
-    zoom: 13,
-    level: "city"
-  },
-  {
-    name: "Andijon",
-    region: "Andijan region, Uzbekistan",
-    lat: 40.7821,
-    lng: 72.3442,
-    zoom: 13,
-    level: "city"
-  },
-  {
-    name: "Namangan",
-    region: "Namangan region, Uzbekistan",
-    lat: 40.9983,
-    lng: 71.6726,
-    zoom: 13,
-    level: "city"
-  },
-  {
-    name: "Samarqand Region",
-    region: "Uzbekistan",
-    lat: 39.65,
-    lng: 66.95,
-    zoom: 9,
-    level: "region",
-    keywords: ["samarqand viloyati"]
-  }
+  { name: "Toshkent", region: "Uzbekistan", lat: 41.2995, lng: 69.2401, zoom: 12, level: "city", keywords: ["tashkent"] },
+  { name: "Samarqand", region: "Samarqand region, Uzbekistan", lat: 39.627, lng: 66.975, zoom: 13, level: "city" },
+  { name: "Urgut", region: "Samarqand viloyati, Urgut tumani", lat: 39.4, lng: 67.2333, zoom: 14, level: "district" },
+  { name: "Buxoro", region: "Bukhara region, Uzbekistan", lat: 39.7747, lng: 64.4286, zoom: 13, level: "city" },
+  { name: "Andijon", region: "Andijan region, Uzbekistan", lat: 40.7821, lng: 72.3442, zoom: 13, level: "city" },
+  { name: "Namangan", region: "Namangan region, Uzbekistan", lat: 40.9983, lng: 71.6726, zoom: 13, level: "city" },
+  { name: "Nukus", region: "Qoraqalpog'iston, Uzbekistan", lat: 42.4531, lng: 59.6103, zoom: 13, level: "city" },
+  { name: "Qarshi", region: "Qashqadaryo, Uzbekistan", lat: 38.8606, lng: 65.7891, zoom: 13, level: "city" },
+  { name: "Termiz", region: "Surxondaryo, Uzbekistan", lat: 37.2242, lng: 67.2783, zoom: 13, level: "city" },
+  { name: "Farg'ona", region: "Farg'ona viloyati, Uzbekistan", lat: 40.3864, lng: 71.7864, zoom: 13, level: "city" },
+  // Central Asia beyond Uzbekistan — also just quick offline anchors
+  { name: "Almaty", region: "Kazakhstan", lat: 43.2389, lng: 76.8897, zoom: 12, level: "city" },
+  { name: "Bishkek", region: "Kyrgyzstan", lat: 42.8746, lng: 74.5698, zoom: 12, level: "city" },
+  { name: "Dushanbe", region: "Tajikistan", lat: 38.5598, lng: 68.787, zoom: 12, level: "city" },
+  { name: "Ashgabat", region: "Turkmenistan", lat: 37.9601, lng: 58.3261, zoom: 12, level: "city" }
 ];
 
-// Boundary line color by administrative level, so a district/city outline is
-// always visually distinct from a smaller mahalla/neighborhood outline —
-// and both stay distinct from the user's own moss-green measurement polygon.
-export function boundaryColorForLevel(level) {
-  if (level === "mahalla") return "#A85A2A"; // clay
-  if (level === "district") return "#3B6E91"; // steel blue
-  return "#5B6E63"; // muted green-gray for city/region
-}
-
-// Token-based matching: "Urgut Kengash" splits into ["urgut","kengash"], so it
-// matches the "Kengash" entry even though no single field contains the full
-// two-word phrase. Also checks each location's optional keyword aliases.
 export function searchLocations(query) {
   const q = query.trim().toLowerCase();
   if (!q) return [];

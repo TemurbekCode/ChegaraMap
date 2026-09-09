@@ -7,28 +7,34 @@
     transform: translateX(-50%) scale(0.3);
     opacity: 0;
   }
+
   55% {
     transform: translateX(-50%) scale(1.08);
     opacity: 1;
   }
+
   75% {
     transform: translateX(-50%) scale(0.96);
   }
+
   100% {
     transform: translateX(-50%) scale(1);
   }
 }
+
 @keyframes hintFadeOut {
   to {
     opacity: 0;
     transform: translateX(-50%) translateY(-10px) scale(0.92);
   }
 }
+
 @keyframes suggestionsFadeIn {
   from {
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -36,18 +42,36 @@
 }
 
 .measure-stage {
-  position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
+  padding: 10px;
+  background: var(--paper);
 }
 
-.map-instance {
+// The map now lives inside a hard-bounded, clipped, rounded frame instead of
+// stretching edge-to-edge. Two reasons: (1) it looks a lot better as a
+// contained card, and (2) `overflow: hidden` here is a safety net — no matter
+// what causes Leaflet's internal panes to miscalculate their size, they
+// physically cannot render outside this box and blow out the page anymore.
+.map-frame {
+  position: relative;
   flex: 1;
-  width: 100%;
-  height: 100%;
+  min-height: 320px;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-1);
   background: #e9e6db;
 }
+
+.map-instance,
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
 .leaflet-container {
   font-family: var(--font-body);
 }
@@ -60,6 +84,7 @@
   z-index: 30;
   width: calc(100% - 24px);
 }
+
 .search-input-wrap {
   display: flex;
   align-items: center;
@@ -74,6 +99,7 @@
     flex-shrink: 0;
     color: var(--muted);
   }
+
   input {
     border: none;
     outline: none;
@@ -84,6 +110,7 @@
     color: var(--ink);
   }
 }
+
 .search-suggestions {
   margin-top: 6px;
   background: var(--panel);
@@ -98,6 +125,7 @@
     animation: suggestionsFadeIn 0.18s ease both;
   }
 }
+
 .suggestion {
   display: flex;
   align-items: center;
@@ -110,15 +138,24 @@
   &:hover {
     background: var(--moss-tint);
   }
+
   small {
     color: var(--muted);
     font-size: 12px;
   }
 }
+
 .suggestion-empty {
   padding: 14px 16px;
   font-size: 13.5px;
   color: var(--muted);
+}
+
+.suggestion-loading {
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
 }
 
 /* ---------- badge + empty hint ---------- */
@@ -191,6 +228,7 @@
   padding: 6px;
   box-shadow: var(--shadow-1);
 }
+
 .ctrl-btn {
   display: flex;
   align-items: center;
@@ -210,10 +248,12 @@
     background: var(--line-soft);
     color: var(--ink);
   }
+
   &:disabled {
     opacity: 0.35;
     cursor: not-allowed;
   }
+
   &.primary {
     background: var(--moss);
     color: #fff;
@@ -231,6 +271,7 @@
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
 .edge-label {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--line);
@@ -249,14 +290,17 @@
     left: 18px;
     width: min(360px, calc(100% - 36px));
   }
+
   .badge-estimate {
     top: 18px;
     left: auto;
     right: 18px;
   }
+
   .map-empty-hint {
     top: 88px;
   }
+
   .map-controls {
     left: 18px;
     transform: none;

@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContext.jsx";
-import { searchLocations } from "../../data/locations.js";
+import { searchLocations as searchOffline } from "../../data/locations.js";
+import { searchPlacesOnline } from "../../utils/geocode.js";
+
+const DEBOUNCE_MS = 500;
 
 export default function SearchBar({ mapInstance, onSelectLocation }) {
   const { t, showToast } = useApp();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
+  const debounceRef = useRef(null);
+  const abortRef = useRef(null);
 
   useEffect(() => {
     function onDocClick(e) {
@@ -17,11 +23,47 @@ export default function SearchBar({ mapInstance, onSelectLocation }) {
     return () => document.removeEventListener("click", onDocClick);
   }, []);
 
+  // clean up any in-flight request/timer if the component unmounts
+  useEffect(() => {
+    return () => {
+      clearTimeout(debounceRef.current);
+      if (abortRef.current) abortRef.current.abort();
+    };
+  }, []);
+
   function runSearch(value) {
     setQuery(value);
-    const found = searchLocations(value);
-    setResults(found);
-    setOpen(value.trim().length > 0);
+    const trimmed = value.trim();
+    setOpen(trimmed.length > 0);
+
+    // instant offline suggestions while the real (online) search is in flight
+    setResults(searchOffline(trimmed));
+
+    clearTimeout(debounceRef.current);
+    if (abortRef.current) abortRef.current.abort();
+
+    if (!trimmed) {
+      setLoading(false);
+      return;
+    }
+
+    debounceRef.current = setTimeout(async () => {
+      const controller = new AbortController();
+      abortRef.current = controller;
+      setLoading(true);
+      try {
+        const online = await searchPlacesOnline(trimmed, { signal: controller.signal });
+        setResults(online.length ? online : searchOffline(trimmed));
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          // no internet, or the public Nominatim instance is rate-limiting us —
+          // silently fall back to the offline list rather than showing an error
+          setResults(searchOffline(trimmed));
+        }
+      } finally {
+        setLoading(false);
+      }
+    }, DEBOUNCE_MS);
   }
 
   function selectLocation(loc) {
@@ -35,7 +77,7 @@ export default function SearchBar({ mapInstance, onSelectLocation }) {
     if (e.key === "Enter") {
       if (results.length) {
         selectLocation(results[0]);
-      } else {
+      } else if (!loading) {
         showToast(t("err.searchNoResults"));
       }
     }
@@ -61,14 +103,14 @@ export default function SearchBar({ mapInstance, onSelectLocation }) {
       </div>
 
       <div className={`search-suggestions${open ? " open" : ""}`} role="listbox">
-        {results.length === 0
-          ? query.trim() && <div className="suggestion-empty">{t("err.searchNoResults")}</div>
-          : results.map((loc) => (
-              <div key={loc.name} className="suggestion" role="option" onClick={() => selectLocation(loc)}>
-                <span>{loc.name}</span>
-                <small>{loc.region}</small>
-              </div>
-            ))}
+        {loading && <div className="suggestion-loading">{t("measure.searchingOnline")}</div>}
+        {!loading && results.length === 0 && query.trim() && <div className="suggestion-empty">{t("err.searchNoResults")}</div>}
+        {results.map((loc) => (
+          <div key={loc.id || loc.name} className="suggestion" role="option" onClick={() => selectLocation(loc)}>
+            <span>{loc.name}</span>
+            <small>{loc.region}</small>
+          </div>
+        ))}
       </div>
     </div>
   );
