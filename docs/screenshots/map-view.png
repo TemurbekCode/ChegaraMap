@@ -1,0 +1,31 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#071A22"/>
+  <rect x="0" y="0" width="1280" height="78" fill="#0D212D"/>
+  <rect x="30" y="16" width="200" height="42" rx="12" fill="#142F3D"/>
+  <text x="62" y="43" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="23" font-weight="700">ChegaraMap</text>
+
+  <rect x="0" y="78" width="1280" height="642" fill="#0B1720"/>
+  <rect x="22" y="96" width="1236" height="590" rx="18" fill="#142B38" stroke="#274B5C"/>
+  <rect x="42" y="116" width="1196" height="548" rx="16" fill="#0A1E2B"/>
+  <path d="M110 590C220 512 242 474 330 445C390 424 431 396 520 335C618 270 689 286 760 236C832 186 910 153 980 206C1057 263 1083 318 1170 384C1182 392 1189 403 1192 417L1192 586L110 590Z" fill="#1D485C"/>
+  <path d="M195 560C260 490 320 455 402 430C500 400 586 336 663 308C745 278 839 260 924 310C1012 362 1072 438 1140 470" stroke="#69D2FF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M350 465L495 385L640 455L716 555L550 600L400 580L350 465Z" fill="#5FD1FF" fill-opacity="0.18" stroke="#66D4FF" stroke-width="3"/>
+  <circle cx="350" cy="465" r="9" fill="#7CF5B5"/>
+  <circle cx="495" cy="385" r="9" fill="#7CF5B5"/>
+  <circle cx="640" cy="455" r="9" fill="#7CF5B5"/>
+  <circle cx="716" cy="555" r="9" fill="#7CF5B5"/>
+  <circle cx="550" cy="600" r="9" fill="#7CF5B5"/>
+  <circle cx="400" cy="580" r="9" fill="#7CF5B5"/>
+
+  <rect x="60" y="144" width="430" height="150" rx="16" fill="#0C232F" stroke="#234B5F"/>
+  <text x="90" y="182" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Current measure</text>
+  <text x="90" y="236" fill="#7BE2FF" font-family="Arial, sans-serif" font-size="42" font-weight="700">1,245 m²</text>
+  <text x="90" y="270" fill="#A7C6D5" font-family="Arial, sans-serif" font-size="17">≈ 12.45 sotix</text>
+
+  <rect x="520" y="144" width="205" height="54" rx="12" fill="#153647"/>
+  <text x="546" y="177" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Save</text>
+  <rect x="745" y="144" width="205" height="54" rx="12" fill="#153647"/>
+  <text x="771" y="177" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Share</text>
+  <rect x="970" y="144" width="205" height="54" rx="12" fill="#153647"/>
+  <text x="995" y="177" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Reset</text>
+</svg>
