@@ -1,125 +1,149 @@
-# 🗺️ Chegara
+# ChegaraMap
 
-**Yer sotib olishdan oldin uni xaritada o'lchab ko'ring.**
+Measure land boundaries on a map before buying, selling, or comparing property.
 
-Chegara — foydalanuvchi interaktiv xaritada yer uchastkasining chegaralarini chizib, uning maydonini (m² va sotix), perimetrini va tomonlar uzunligini bir necha soniyada bilib olishi mumkin bo'lgan veb-ilova. Sotuvchi aytgan o'lchamni xarita asosidagi hisob-kitob bilan solishtirish imkonini ham beradi — professional geodezist chaqirishdan oldin dastlabki tekshiruv uchun.
+ChegaraMap is a web application that lets users draw a land polygon directly on an interactive map, calculate the approximate area, perimeter, and side lengths, and compare the results with the seller's claimed dimensions.
 
-> ⚠️ Bu vosita **rasmiy kadastr o'lchovi emas** — faqat xarita/GPS ma'lumotlariga asoslangan taxminiy baholash.
+It is designed for people who need a fast visual estimate before making a real-world land decision.
 
----
+## Why This Project Exists
 
-## ✨ Imkoniyatlar
+Buying land is risky when the boundary size is unclear. ChegaraMap helps users:
 
-- 🖱️ **Xaritada chizish** — burchaklarni bosib, istalgan shakldagi uchastkani belgilash
-- 📐 **Geodezik hisob-kitob** — maydon, perimetr va har bir tomon uzunligi ([`@turf/turf`](https://turfjs.org/) orqali, taxminiy tekis geometriya emas)
-- ⚖️ **Sotuvchi bilan solishtirish** — sotuvchi aytgan o'lchamni xarita natijasi bilan solishtirib, farqni foizda ko'rish
-- 💾 **Saqlash va yuklash** — o'lchovlarni brauzerda saqlash, keyin ro'yxatdan bosib qayta ochish
-- 🔗 **Ulashish** — natijani Web Share API yoki clipboard orqali yuborish
-- 🌐 **To'liq ikki tilli interfeys** — O'zbekcha (asosiy) va English, bir zumda almashtiriladi
-- 🛰️ **Standart va sun'iy yo'ldosh xarita** rejimlari
-- 📱 **Mobile-first dizayn** — birinchi navbatda telefon uchun, keyin planshet/desktopga moslashadi
+- draw a property boundary on a map
+- calculate approximate size in square meters and sotix
+- compare the result with a seller's claimed measurements
+- save and share measurements
+- make a faster, better-informed decision
 
-## 🧱 Texnologiyalar
+## Features
 
-| Qatlam | Texnologiya |
+- Interactive map drawing
+- Geodesic area and perimeter calculations
+- Side-length measurement for each segment
+- Comparison between user-drawn measurement and seller claim
+- Save and reload measurements in the browser
+- Share measurements using Web Share API or clipboard
+- English and Uzbek language support
+- Standard and satellite map views
+- Mobile-first responsive design
+
+## Tech Stack
+
+| Layer | Technology |
 |---|---|
-| UI | React 18 (functional components + hooks) |
-| Build | Vite |
-| Uslub | SCSS (component-based, har bir komponent o'z faylida) |
-| Xarita | Leaflet + React-Leaflet, OpenStreetMap / Esri World Imagery |
-| Geometriya | Turf.js (geodezik maydon/masofa hisob-kitoblari) |
-| Holat boshqaruvi | React Context (qo'shimcha kutubxonasiz) |
-| Saqlash | Brauzer `localStorage` |
+| UI | React 18 |
+| Build Tool | Vite |
+| Styling | SCSS |
+| Map | Leaflet + React-Leaflet |
+| Geometry | Turf.js |
+| State Management | React Context |
+| Persistence | Browser localStorage |
 
-## 🚀 Ishga tushirish
+## Project Structure
+
+```text
+src/
+├── main.jsx
+├── App.jsx
+├── App.scss
+├── context/
+│   └── AppContext.jsx
+├── i18n/
+│   └── translations.js
+├── utils/
+│   ├── geometry.js
+│   └── storage.js
+├── data/
+│   └── locations.js
+├── styles/
+│   └── global.scss
+├── components/
+│   ├── Navbar/
+│   ├── Hero/
+│   ├── HowItWorks/
+│   ├── Features/
+│   ├── TrustCard/
+│   ├── CtaBand/
+│   ├── Footer/
+│   ├── Home/
+│   ├── Settings/
+│   ├── Toast/
+│   ├── ConfirmModal/
+│   └── Measure/
+│       ├── Measure.jsx
+│       ├── MapCanvas.jsx
+│       ├── SearchBar.jsx
+│       ├── MapControls.jsx
+│       └── ResultPanel.jsx
+```
+
+## How the Calculation Works
+
+1. Each clicked point is stored as a latitude/longitude coordinate.
+2. When the user finishes the polygon, the points are closed and processed.
+3. Turf.js calculates the area using geodesic geometry.
+4. Perimeter and each side length are calculated using distance formulas.
+5. The tool estimates the land size in square meters and converts it to sotix.
+
+## Installation
 
 ```bash
 npm install
 npm run dev
 ```
 
-Terminalda ko'rsatilgan havolani (odatda `http://localhost:5173`) brauzerda oching — xarita darhol ishlaydi, internet aloqasi kerak (xarita plitalari va shriftlar tashqi manbadan yuklanadi).
+Then open the local URL shown in the terminal, usually:
 
-Boshqa buyruqlar:
+```text
+http://localhost:5173
+```
+
+## Production Build
 
 ```bash
-npm run build     # production uchun yig'ish (dist/ papkasi)
-npm run preview   # yig'ilgan versiyani mahalliy ko'rish
+npm run build
+npm run preview
 ```
 
-## 📁 Loyiha tuzilishi
+## Security and Usage Note
 
-Har bir bo'lim o'z papkasida — `.jsx` (mantiq) + `.scss` (uslub) juftligida:
+⚠️ This app is a map-based estimation tool and is not an official cadastral measurement system.
 
-```
-src/
-├── main.jsx                  # kirish nuqtasi
-├── App.jsx / App.scss        # sahifalarni almashtiruvchi qobiq
-│
-├── context/
-│   └── AppContext.jsx        # til, birlik, xarita turi, joriy sahifa, toast, tasdiqlash oynasi
-│
-├── i18n/
-│   └── translations.js       # o'zbekcha / inglizcha to'liq lug'at
-│
-├── utils/
-│   ├── geometry.js           # geodezik hisob-kitoblar (maydon, perimetr, tomonlar)
-│   └── storage.js            # saqlangan o'lchovlar bilan ishlash (localStorage)
-│
-├── data/
-│   └── locations.js          # demo qidiruv manzillari — real geokodlash bilan almashtiriladi
-│
-├── styles/
-│   └── global.scss           # umumiy o'zgaruvchilar, tugmalar va boshqa umumiy klasslar
-│
-└── components/
-    ├── Navbar/                # yuqori navigatsiya
-    ├── Hero/                  # bosh sahifa banneri
-    ├── HowItWorks/            # "Qanday ishlaydi" bo'limi
-    ├── Features/               # imkoniyatlar bo'limi
-    ├── TrustCard/             # ishonch/ogohlantirish kartochkasi
-    ├── CtaBand/               # pastki chaqiruv bo'limi
-    ├── Footer/                # footer
-    ├── Home/                  # yuqoridagi bo'limlarni birlashtiradi
-    ├── Settings/              # sozlamalar sahifasi
-    ├── Toast/                 # bildirishnoma
-    ├── ConfirmModal/          # tasdiqlash oynasi (Tozalash tugmasi uchun)
-    │
-    └── Measure/               # 🎯 ASOSIY O'LCHASH QISMI
-        ├── Measure.jsx        # butun sahifaning holatini boshqaradi
-        ├── MapCanvas.jsx      # haqiqiy Leaflet xaritasi — bosib chizish, qatlamlar
-        ├── SearchBar.jsx      # joy qidirish
-        ├── MapControls.jsx    # Bekor qilish / Tozalash / Yakunlash
-        └── ResultPanel.jsx    # natija, sotuvchi bilan solishtirish, saqlash/ulashish
-```
+It should be used for preliminary analysis only. Real estate boundaries, land ownership, and legal transactions must be verified through official land records and certified professionals.
 
-## 🧮 Hisob-kitob qanday ishlaydi
+### Safety Notes
 
-1. Har bir bosilgan nuqta `{lat, lng}` sifatida saqlanadi.
-2. **Yakunlash** bosilganda nuqtalar yopiq ko'pburchakka aylantiriladi va **Turf.js** (`turf.area`) orqali maydon hisoblanadi — bu tekis lat/lng gradusidan emas, Yer yuzasining haqiqiy geometriyasidan foydalanadi.
-3. Perimetr va har bir tomon uzunligi **haversine** formulasi bilan (katta doira masofasi) hisoblanadi.
-4. Taxminiy o'lcham (masalan, 30.0 × 20.0 m) ko'pburchakning geodezik bounding box'idan olinadi.
-5. `sotix = m² / 100`.
+- The app stores user measurement data in browser `localStorage`
+- There is no backend authentication yet
+- There is no payment or sensitive personal data flow in the current version
+- The app does not replace legal land documentation
 
-## 🔐 Ro'yxatdan o'tish (Register)
+### Monetization Safety
 
-"Tekin boshlash" tugmasi (Navbar, Hero, CtaBand, Footer — hammasi) bosilganda, agar foydalanuvchi hali ro'yxatdan o'tmagan bo'lsa, ism va email so'raladi (parolsiz). Bir marta to'ldirilgach, o'sha brauzerda qayta so'ralmaydi.
+Advertising integration is safe for this product because there is no financial transaction or sensitive user data processing in the current front-end flow. However, if the product eventually includes user accounts, storage, or real property records, a secure backend and privacy policy will be necessary.
 
-> ⚠️ **Muhim cheklov:** bu ma'lumot faqat **shu brauzer**ning `localStorage`'ida saqlanadi — backend yo'q. Ya'ni turli odamlarning haqiqiy ro'yxatdan o'tishlarini markazlashtirib sanab bo'lmaydi; har kim faqat o'z qurilmasida "ro'yxatdan o'tgan" bo'lib qoladi. Haqiqiy, barcha foydalanuvchilar bo'yicha statistika kerak bo'lsa, kichik backend (masalan, Supabase, Firebase yoki oddiy webhook) ulash kerak — `src/context/AppContext.jsx` ichidagi `submitRegister` funksiyasi aynan shu joy, u yerga API chaqiruvini qo'shish kifoya.
->
-> Admin email (`temurbekalisherov82@gmail.com`) bilan ro'yxatdan o'tilganda, saqlangan foydalanuvchi obyektida `isAdmin: true` belgilanadi — kelajakda admin panel qo'shish uchun tayyor.
+## Registration Flow
 
-## 🗺️ Keyingi bosqichlar (roadmap)
+The app includes a lightweight registration flow for users who click the main action button. If a user is not yet registered, they are asked for a name and email without a password.
 
-- [ ] Ro'yxatdan o'tishlarni markazlashtirish uchun backend (Supabase/Firebase) ulash
-- [ ] Admin uchun foydalanuvchilar sonini ko'rish paneli
+This is intentionally simple and is currently browser-local only. It is designed as a demo flow and can later be replaced with a real backend authentication system.
 
-- [ ] `src/data/locations.js` dagi demo manzillarni haqiqiy geokodlash xizmati (masalan, Nominatim yoki Google Places) bilan almashtirish
-- [ ] Saqlangan o'lchovlarni qurilmalar orasida sinxronlash uchun backend + ma'lumotlar bazasi qo'shish
-- [ ] Rasmiy kadastr integratsiyasi
-- [ ] O'lchov natijasini PDF hisobot sifatida eksport qilish
-- [ ] Mobil ilova versiyasi
+## Roadmap
 
-## ⚠️ Muhim eslatma
+- [ ] Replace demo locations with real geocoding service
+- [ ] Add backend-based user registration and admin panel
+- [ ] Add cross-device sync for saved measurements
+- [ ] Add official cadastral integration
+- [ ] Add PDF report export
+- [ ] Add mobile app version
 
-Chegara faqat **dastlabki, xarita asosidagi baholash** vositasi. Rasmiy yer chegaralari, mulkchilik va yuridik bitimlar uchun rasmiy kadastr hujjatlari va malakali mutaxassisga murojaat qiling.
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Temur Alisherov
+
+GitHub: [@TemurbekCode](https://github.com/TemurbekCode)
