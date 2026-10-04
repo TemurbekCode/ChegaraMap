@@ -1,0 +1,38 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#071520"/>
+  <rect x="0" y="0" width="1280" height="72" fill="#0E1F2D"/>
+  <rect x="30" y="20" width="160" height="32" rx="10" fill="#132A39"/>
+  <text x="52" y="42" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">ChegaraMap</text>
+  <rect x="212" y="18" width="250" height="38" rx="12" fill="#102534"/>
+  <text x="240" y="43" fill="#8ED9FF" font-family="Arial, sans-serif" font-size="18">Search location</text>
+  <rect x="1040" y="18" width="180" height="38" rx="12" fill="#173A52"/>
+  <text x="1095" y="43" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Start</text>
+
+  <rect x="0" y="72" width="1280" height="648" fill="#0B1823"/>
+  <rect x="28" y="94" width="250" height="560" rx="18" fill="#102332" stroke="#213C4C"/>
+  <rect x="54" y="124" width="200" height="42" rx="10" fill="#173A52"/>
+  <text x="81" y="151" fill="#F1F9FF" font-family="Arial, sans-serif" font-size="18">Measure land</text>
+
+  <rect x="54" y="190" width="200" height="54" rx="12" fill="#0D212F" stroke="#2A4F63"/>
+  <text x="72" y="223" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="17">Boundary points</text>
+
+  <rect x="54" y="266" width="200" height="54" rx="12" fill="#0D212F" stroke="#2A4F63"/>
+  <text x="72" y="299" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="17">Area result</text>
+
+  <rect x="54" y="342" width="200" height="54" rx="12" fill="#0D212F" stroke="#2A4F63"/>
+  <text x="72" y="375" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="17">Compare seller</text>
+
+  <rect x="319" y="94" width="930" height="560" rx="22" fill="#122A38" stroke="#2F536A"/>
+  <rect x="340" y="114" width="890" height="520" rx="18" fill="#0D1F2A"/>
+  <path d="M420 540C500 430 560 370 620 340C710 300 780 330 860 250C930 175 980 180 1035 235C1085 290 1090 405 1115 465" stroke="#5CD7FF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M620 340L780 270L920 350L860 500L680 540L620 340Z" fill="#67D6FF" fill-opacity="0.18" stroke="#67D6FF" stroke-width="3"/>
+  <circle cx="620" cy="340" r="8" fill="#79FFB8"/>
+  <circle cx="780" cy="270" r="8" fill="#79FFB8"/>
+  <circle cx="920" cy="350" r="8" fill="#79FFB8"/>
+  <circle cx="860" cy="500" r="8" fill="#79FFB8"/>
+  <circle cx="680" cy="540" r="8" fill="#79FFB8"/>
+  <rect x="620" y="125" width="410" height="148" rx="16" fill="#0A202B" stroke="#1D3849"/>
+  <text x="646" y="162" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="19">Approximate area</text>
+  <text x="646" y="215" fill="#7AE3FF" font-family="Arial, sans-serif" font-size="40" font-weight="700">1,245 m²</text>
+  <text x="646" y="246" fill="#95B8CB" font-family="Arial, sans-serif" font-size="17">≈ 12.45 sotix</text>
+</svg>
