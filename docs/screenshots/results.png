@@ -1,0 +1,38 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#071821"/>
+  <rect x="0" y="0" width="1280" height="82" fill="#0E212D"/>
+  <rect x="34" y="18" width="220" height="44" rx="12" fill="#122F3D"/>
+  <text x="62" y="47" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="23" font-weight="700">ChegaraMap</text>
+
+  <rect x="0" y="82" width="1280" height="638" fill="#0B1520"/>
+  <rect x="26" y="108" width="1228" height="560" rx="20" fill="#122A38" stroke="#2B465A"/>
+
+  <rect x="50" y="132" width="360" height="514" rx="18" fill="#0D212E" stroke="#224761"/>
+  <text x="76" y="175" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Result panel</text>
+
+  <rect x="76" y="210" width="308" height="52" rx="12" fill="#163A4E"/>
+  <text x="96" y="243" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Area: 1,245 m²</text>
+
+  <rect x="76" y="282" width="308" height="52" rx="12" fill="#163A4E"/>
+  <text x="96" y="315" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Perimeter: 179.8 m</text>
+
+  <rect x="76" y="354" width="308" height="52" rx="12" fill="#163A4E"/>
+  <text x="96" y="387" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Compare: +8.6%</text>
+
+  <rect x="76" y="426" width="308" height="52" rx="12" fill="#163A4E"/>
+  <text x="96" y="459" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Seller claim: 1,150 m²</text>
+
+  <rect x="76" y="498" width="308" height="52" rx="12" fill="#133D52"/>
+  <text x="120" y="531" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="18">Download report</text>
+
+  <rect x="444" y="132" width="780" height="514" rx="18" fill="#0A1C27" stroke="#224761"/>
+  <path d="M500 550C610 470 670 423 752 398C830 375 880 344 960 256C1033 175 1107 186 1170 240C1199 267 1206 301 1217 356V605H500V550Z" fill="#204D60"/>
+  <path d="M585 530L687 452L766 483L877 404L949 470L1033 438L1120 488" stroke="#79DBFF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M680 440L774 340L889 380L926 500L801 565L670 520L680 440Z" fill="#76D6FF" fill-opacity="0.18" stroke="#76D6FF" stroke-width="3"/>
+  <circle cx="680" cy="440" r="9" fill="#7DF5BA"/>
+  <circle cx="774" cy="340" r="9" fill="#7DF5BA"/>
+  <circle cx="889" cy="380" r="9" fill="#7DF5BA"/>
+  <circle cx="926" cy="500" r="9" fill="#7DF5BA"/>
+  <circle cx="801" cy="565" r="9" fill="#7DF5BA"/>
+  <circle cx="670" cy="520" r="9" fill="#7DF5BA"/>
+</svg>
